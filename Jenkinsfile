@@ -21,7 +21,7 @@ pipeline {
   environment {
     APP_NAME = 'spring-petclinic'
     ANSIBLE_HOST_KEY_CHECKING = 'False'
-    MAVEN_OPTS = '-Dmaven.repo.local=.m2/repository'
+    MAVEN_OPTS = '-Dmaven.repo.local=/var/jenkins_home/.m2/repository'
   }
 
   stages {
