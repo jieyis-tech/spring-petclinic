@@ -88,7 +88,7 @@ pipeline {
         sh '''
           set -eu
           mkdir -p target/evidence
-          curl -fsS "${PROD_URL}/" -o target/evidence/production-welcome.html
+          curl --retry 10 --retry-delay 3 --retry-all-errors -fsS "${PROD_URL}/" -o target/evidence/production-welcome.html
           grep -q "DevSecOps automated deployment release v1" target/evidence/production-welcome.html
         '''
         archiveArtifacts artifacts: 'target/evidence/production-welcome.html', fingerprint: true

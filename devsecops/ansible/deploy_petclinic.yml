@@ -58,6 +58,9 @@
         state: started
         daemon_reload: true
 
+    - name: Apply pending PetClinic restart
+      ansible.builtin.meta: flush_handlers
+
     - name: Wait for PetClinic health endpoint
       ansible.builtin.uri:
         url: "http://127.0.0.1:{{ petclinic_port }}/actuator/health"
