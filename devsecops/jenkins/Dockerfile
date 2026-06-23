@@ -7,6 +7,7 @@ RUN apt-get update \
       ansible \
       ca-certificates \
       curl \
+      docker-cli \
       docker.io \
       git \
       openssh-client \
