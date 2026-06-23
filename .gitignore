@@ -44,6 +44,8 @@ out/
 
 ### Local secrets ###
 devsecops/.env
+devsecops/vagrant/.vagrant/
+*.baiduyun.uploading.cfg
 
 ### CSS ###
 _site/
