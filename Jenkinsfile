@@ -103,19 +103,19 @@ pipeline {
         sh '''
           set -eu
           mkdir -p zap-reports
-          ZAP_WORKSPACE="/zap/wrk/${WORKSPACE#/var/jenkins_home/}"
+          ZAP_WORKSPACE="${WORKSPACE#/var/jenkins_home/}"
           docker run --rm \
             --user root \
             --network devsecops-net \
             -v petclinic-devsecops_jenkins_home:/zap/wrk \
-            -w "$ZAP_WORKSPACE" \
+            -w /zap/wrk \
             ghcr.io/zaproxy/zaproxy:stable \
             zap-baseline.py \
               -t "${PROD_URL}" \
-              -c devsecops/zap/zap-baseline.conf \
-              -r zap-reports/zap-baseline.html \
-              -J zap-reports/zap-baseline.json \
-              -x zap-reports/zap-baseline.xml || true
+              -c "$ZAP_WORKSPACE/devsecops/zap/zap-baseline.conf" \
+              -r "$ZAP_WORKSPACE/zap-reports/zap-baseline.html" \
+              -J "$ZAP_WORKSPACE/zap-reports/zap-baseline.json" \
+              -x "$ZAP_WORKSPACE/zap-reports/zap-baseline.xml" || true
         '''
       }
       post {
