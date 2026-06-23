@@ -75,7 +75,7 @@ pipeline {
           ansible-playbook \
             -i devsecops/ansible/inventory.ini \
             devsecops/ansible/deploy_petclinic.yml \
-            --extra-vars "petclinic_artifact=${ARTIFACT}"
+            --extra-vars "petclinic_artifact=${WORKSPACE}/${ARTIFACT}"
         '''
       }
     }
