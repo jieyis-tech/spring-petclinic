@@ -1,0 +1,131 @@
+name: petclinic-devsecops
+
+services:
+  jenkins:
+    build:
+      context: ./jenkins
+    container_name: petclinic-jenkins
+    restart: unless-stopped
+    privileged: true
+    user: root
+    ports:
+      - "8081:8080"
+      - "50000:50000"
+    environment:
+      CASC_JENKINS_CONFIG: /var/jenkins_home/casc.yaml
+      JENKINS_ADMIN_ID: ${JENKINS_ADMIN_ID:-admin}
+      JENKINS_ADMIN_PASSWORD: ${JENKINS_ADMIN_PASSWORD:-admin123}
+      SONARQUBE_TOKEN: ${SONARQUBE_TOKEN:-replace-with-token-created-in-sonarqube}
+    volumes:
+      - jenkins_home:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./jenkins/casc.yaml:/var/jenkins_home/casc.yaml:ro
+    extra_hosts:
+      - "production-vm:192.168.56.20"
+    networks:
+      - devsecops-net
+    depends_on:
+      - sonarqube
+
+  sonarqube:
+    image: sonarqube:community
+    container_name: petclinic-sonarqube
+    restart: unless-stopped
+    ports:
+      - "9000:9000"
+    environment:
+      SONAR_JDBC_URL: jdbc:postgresql://sonarqube-db:5432/sonarqube
+      SONAR_JDBC_USERNAME: sonarqube
+      SONAR_JDBC_PASSWORD: sonarqube
+    volumes:
+      - sonarqube_data:/opt/sonarqube/data
+      - sonarqube_extensions:/opt/sonarqube/extensions
+      - sonarqube_logs:/opt/sonarqube/logs
+    networks:
+      - devsecops-net
+    depends_on:
+      - sonarqube-db
+
+  sonarqube-db:
+    image: postgres:16
+    container_name: petclinic-sonarqube-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: sonarqube
+      POSTGRES_PASSWORD: sonarqube
+      POSTGRES_DB: sonarqube
+    volumes:
+      - sonarqube_db:/var/lib/postgresql/data
+    networks:
+      - devsecops-net
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: petclinic-prometheus
+    restart: unless-stopped
+    ports:
+      - "9090:9090"
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+      - --storage.tsdb.path=/prometheus
+      - --web.enable-lifecycle
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus_data:/prometheus
+    extra_hosts:
+      - "production-vm:192.168.56.20"
+    networks:
+      - devsecops-net
+    depends_on:
+      - jenkins
+
+  grafana:
+    image: grafana/grafana-oss:latest
+    container_name: petclinic-grafana
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      GF_SECURITY_ADMIN_USER: ${GRAFANA_ADMIN_USER:-admin}
+      GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_ADMIN_PASSWORD:-admin123}
+      GF_USERS_ALLOW_SIGN_UP: "false"
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./grafana/provisioning:/etc/grafana/provisioning:ro
+      - ./grafana/dashboards:/var/lib/grafana/dashboards:ro
+    networks:
+      - devsecops-net
+    depends_on:
+      - prometheus
+
+  zap:
+    image: ghcr.io/zaproxy/zaproxy:stable
+    container_name: petclinic-zap
+    restart: unless-stopped
+    command: >
+      zap.sh -daemon -host 0.0.0.0 -port 8090
+      -config api.disablekey=true
+      -config api.addrs.addr.name=.*
+      -config api.addrs.addr.regex=true
+    ports:
+      - "8090:8090"
+    volumes:
+      - ./zap:/zap/wrk:rw
+    extra_hosts:
+      - "production-vm:192.168.56.20"
+    networks:
+      - devsecops-net
+
+networks:
+  devsecops-net:
+    name: devsecops-net
+    driver: bridge
+
+volumes:
+  jenkins_home:
+  sonarqube_data:
+  sonarqube_extensions:
+  sonarqube_logs:
+  sonarqube_db:
+  prometheus_data:
+  grafana_data:

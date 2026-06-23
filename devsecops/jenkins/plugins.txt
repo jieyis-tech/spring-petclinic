@@ -1,0 +1,15 @@
+ansicolor
+blueocean
+configuration-as-code
+credentials-binding
+docker-workflow
+git
+htmlpublisher
+junit
+pipeline-stage-view
+prometheus
+sonar
+timestamper
+ws-cleanup
+workflow-aggregator
+workflow-multibranch

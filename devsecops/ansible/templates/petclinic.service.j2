@@ -1,0 +1,17 @@
+[Unit]
+Description=Spring PetClinic
+After=network.target
+
+[Service]
+User={{ petclinic_service_user }}
+Group={{ petclinic_service_user }}
+WorkingDirectory={{ petclinic_install_dir }}
+Environment=SPRING_PROFILES_ACTIVE={{ petclinic_spring_profiles }}
+Environment=SERVER_PORT={{ petclinic_port }}
+ExecStart=/usr/bin/java -jar {{ petclinic_install_dir }}/spring-petclinic.jar
+SuccessExitStatus=143
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,9 @@
+[production]
+production-vm ansible_host=192.168.56.20 ansible_user=ubuntu ansible_ssh_private_key_file=~/.ssh/petclinic_vm
+
+[production:vars]
+ansible_python_interpreter=/usr/bin/python3
+petclinic_service_user=petclinic
+petclinic_install_dir=/opt/spring-petclinic
+petclinic_port=8080
+petclinic_spring_profiles=default
