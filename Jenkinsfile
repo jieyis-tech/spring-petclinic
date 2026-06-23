@@ -105,8 +105,8 @@ pipeline {
           mkdir -p zap-reports
           docker run --rm \
             --network devsecops-net \
-            --volumes-from petclinic-jenkins \
-            -w "$WORKSPACE" \
+            -v "$WORKSPACE:/zap/wrk" \
+            -w /zap/wrk \
             ghcr.io/zaproxy/zaproxy:stable \
             zap-baseline.py \
               -t "${PROD_URL}" \
