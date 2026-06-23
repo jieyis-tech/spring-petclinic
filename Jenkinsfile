@@ -107,6 +107,7 @@ pipeline {
           docker run --rm \
             --user root \
             --network devsecops-net \
+            --add-host production-vm:192.168.56.20 \
             -v petclinic-devsecops_jenkins_home:/zap/wrk \
             -w /zap/wrk \
             ghcr.io/zaproxy/zaproxy:stable \
