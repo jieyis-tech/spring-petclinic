@@ -46,7 +46,9 @@ pipeline {
     stage('SonarQube Static Analysis') {
       steps {
         withSonarQubeEnv('SonarQube') {
-          sh './mvnw -B org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=spring-petclinic -Dsonar.projectName=spring-petclinic'
+          withCredentials([string(credentialsId: 'sonarqube-token', variable: 'SONAR_TOKEN')]) {
+            sh './mvnw -B org.sonarsource.scanner.maven:sonar-maven-plugin:5.7.0.6970:sonar -Dsonar.projectKey=spring-petclinic -Dsonar.projectName=spring-petclinic -Dsonar.token="$SONAR_TOKEN"'
+          }
         }
       }
     }
