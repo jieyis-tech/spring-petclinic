@@ -19,6 +19,7 @@ Screenshots are saved in `docs/evidence/`:
 7. `07-grafana-dashboard.png` - Grafana dashboard visualizing Jenkins metrics from Prometheus.
 8. `8-blueocean.png` - Jenkins Blue Ocean pipeline visualization.
 9. `9-Jenkins #19 console.png` - Jenkins build #19 console output for the SCM-triggered pipeline run.
+10. `10-github-commit-diff.png` - GitHub commit diff showing the welcome page code change deployed by the pipeline.
 
 ## Evidence Checklist
 
