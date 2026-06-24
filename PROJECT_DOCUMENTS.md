@@ -8,17 +8,16 @@ Use this file as the submission index for screenshots and the demo video link.
 
 ## Required Screenshots
 
-Save screenshots in `docs/evidence/` with these suggested names:
+Screenshots are saved in `docs/evidence/`:
 
-1. `01-production-welcome-before.png` - production VM PetClinic welcome screen before the visible code change.
-2. `02-jenkins-blue-ocean-pipeline.png` - Jenkins Blue Ocean pipeline visualization.
-3. `03-sonarqube-project-analysis.png` - SonarQube project dashboard for `spring-petclinic`.
-4. `04-prometheus-targets.png` - Prometheus targets page showing Jenkins and PetClinic targets.
-5. `05-grafana-jenkins-dashboard.png` - Grafana dashboard visualizing Jenkins metrics.
-6. `06-zap-baseline-report.png` - ZAP HTML report or ZAP container scan result.
-7. `07-github-code-change.png` - committed welcome page code change.
-8. `08-jenkins-auto-trigger.png` - Jenkins build triggered by SCM polling after the commit.
-9. `09-production-welcome-after.png` - production VM welcome screen showing `DevSecOps automated deployment release v1`.
+1. `01-jenkins-stage-view-success.png` - Jenkins Stage View showing the successful DevSecOps pipeline with build, SonarQube analysis, deployment, smoke test, and OWASP ZAP stages.
+2. `02-jenkins-build-18-artifacts.png` - Jenkins build details showing the successful build, Git revision, production smoke-test artifact, application jar, and ZAP HTML/JSON/XML artifacts.
+3. `03-zap-baseline-report.png` - OWASP ZAP baseline HTML report for the deployed production application.
+4. `04-sonarqube-project-overview.png` - SonarQube project dashboard for `spring-petclinic` showing the Quality Gate result.
+5. `05-production-petclinic-page.png` - production VM PetClinic welcome screen at `192.168.56.20:8080` showing `DevSecOps automated deployment release v1`.
+6. `06-prometheus-targets-up.png` - Prometheus targets page showing Jenkins, production PetClinic, and Prometheus targets as `UP`.
+7. `07-grafana-dashboard.png` - Grafana dashboard visualizing Jenkins metrics from Prometheus.
+8. `blueocean.png` - Jenkins Blue Ocean pipeline visualization.
 
 ## Evidence Checklist
 
