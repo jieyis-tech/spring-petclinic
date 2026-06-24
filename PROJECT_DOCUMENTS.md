@@ -4,7 +4,7 @@ Use this file as the submission index for screenshots and the demo video link.
 
 ## Video
 
-- Demo video link: `<paste your video URL here>`
+- Demo video link: https://www.youtube.com/watch?v=PrI1WNJacnI
 
 ## Required Screenshots
 
@@ -17,7 +17,8 @@ Screenshots are saved in `docs/evidence/`:
 5. `05-production-petclinic-page.png` - production VM PetClinic welcome screen at `192.168.56.20:8080` showing `DevSecOps automated deployment release v1`.
 6. `06-prometheus-targets-up.png` - Prometheus targets page showing Jenkins, production PetClinic, and Prometheus targets as `UP`.
 7. `07-grafana-dashboard.png` - Grafana dashboard visualizing Jenkins metrics from Prometheus.
-8. `blueocean.png` - Jenkins Blue Ocean pipeline visualization.
+8. `8-blueocean.png` - Jenkins Blue Ocean pipeline visualization.
+9. `9-Jenkins #19 console.png` - Jenkins build #19 console output for the SCM-triggered pipeline run.
 
 ## Evidence Checklist
 
